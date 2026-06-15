@@ -1,2 +1,4 @@
 openai
 fastapi
+uvicorn
+fastapi-clerk-auth
