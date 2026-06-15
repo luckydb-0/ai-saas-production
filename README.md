@@ -1,40 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# *IdeaGen Pro*
 
-## Getting Started
+"IdeaGen Pro" is an exercise project built while following the Udemy course
+[AI Engineer Production Track: Deploy LLMs & Agents at Scale](https://www.udemy.com/course/generative-and-agentic-ai-in-production/).
 
-First, run the development server:
+The project explores a production-style AI SaaS architecture deployed on Vercel: users authenticate with Clerk, access a subscription-gated product page, and receive an AI-generated project idea streamed from an authenticated Python API.
+
+## Features
+
+- Clerk authentication and user management
+- Clerk subscription gating and pricing UI
+- Authenticated FastAPI endpoint
+- Streaming OpenAI responses using Server-Sent Events (SSE)
+- Markdown rendering for generated project ideas
+- Responsive interface styled with Tailwind CSS
+
+## Tech Stack
+
+- Next.js 16 Pages Router, React 19, and TypeScript
+- FastAPI and Python
+- OpenAI API
+- Clerk authentication and billing
+- Tailwind CSS
+- Vercel deployment
+
+## Project Structure
+
+```text
+api/index.py        Authenticated FastAPI streaming endpoint
+pages/index.tsx     Public landing page and sign-in flow
+pages/product.tsx   Subscription-gated idea generator
+pages/_app.tsx      Clerk provider and global application setup
+styles/globals.css  Global and Markdown styles
+week1/              Course notes and exercises
+```
+
+## Prerequisites
+
+- Node.js 20.9 or newer
+- Python 3
+- OpenAI and Clerk accounts
+- A Clerk plan with the key `premium_subscription`
+
+## Setup
+
+Install the frontend dependencies:
+
+```bash
+npm install
+```
+
+Create a Python virtual environment and install the API dependencies:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Create `.env.local` with the required credentials:
+
+```dotenv
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+CLERK_JWKS_URL=your_clerk_jwks_url
+OPENAI_API_KEY=your_openai_api_key
+```
+
+Do not commit `.env.local` or any real credentials.
+
+## Development
+
+Run the Next.js frontend locally:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+The backend is implemented as a Python function in `api/index.py`, rather than a Next.js API route. The complete frontend-to-API flow is designed to run on Vercel, which detects both the Next.js application and the Python function.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Useful checks:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+```bash
+npm run lint
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+Link the repository to a Vercel project and configure these environment variables for the appropriate environments:
 
-To learn more about Next.js, take a look at the following resources:
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+- `CLERK_SECRET_KEY`
+- `CLERK_JWKS_URL`
+- `OPENAI_API_KEY`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+Deploy a preview:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npx vercel
+```
 
-## Deploy on Vercel
+Deploy to production:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npx vercel --prod
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+## Learning Resources
+
+- [Course: AI Engineer Production Track](https://www.udemy.com/course/generative-and-agentic-ai-in-production/)
+- [Next.js Pages Router documentation](https://nextjs.org/docs/pages)
+- [Clerk documentation](https://clerk.com/docs)
+- [FastAPI documentation](https://fastapi.tiangolo.com/)
+- [OpenAI API documentation](https://platform.openai.com/docs)
+
+## Disclaimer
+
+This repository is an educational exercise, not a production-ready commercial service. Pricing, subscription benefits, security controls, usage limits, and operational safeguards would need further work before a real launch.
