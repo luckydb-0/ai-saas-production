@@ -1,17 +1,18 @@
-# *IdeaGen Pro*
+# MediNotes Pro
 
-"IdeaGen Pro" is an exercise project built while following the Udemy course
+MediNotes Pro is an exercise project built while following the Udemy course
 [AI Engineer Production Track: Deploy LLMs & Agents at Scale](https://www.udemy.com/course/generative-and-agentic-ai-in-production/).
 
-The project explores a production-style AI SaaS architecture deployed on Vercel: users authenticate with Clerk, access a subscription-gated product page, and receive an AI-generated project idea streamed from an authenticated Python API.
+The project explores a production-style AI SaaS architecture deployed on Vercel: users authenticate with Clerk, access a subscription-gated product page, submit healthcare consultation notes, and receive an AI-generated doctor summary, next-step checklist, and patient-friendly email draft streamed from an authenticated Python API.
 
 ## Features
 
 - Clerk authentication and user management
 - Clerk subscription gating and pricing UI
-- Authenticated FastAPI endpoint
+- Consultation form with patient name, visit date, and clinical notes
+- Authenticated FastAPI endpoint for healthcare note summarization
 - Streaming OpenAI responses using Server-Sent Events (SSE)
-- Markdown rendering for generated project ideas
+- Markdown rendering for generated summaries and email drafts
 - Responsive interface styled with Tailwind CSS
 
 ## Tech Stack
@@ -20,6 +21,7 @@ The project explores a production-style AI SaaS architecture deployed on Vercel:
 - FastAPI and Python
 - OpenAI API
 - Clerk authentication and billing
+- React Datepicker
 - Tailwind CSS
 - Vercel deployment
 
@@ -28,7 +30,7 @@ The project explores a production-style AI SaaS architecture deployed on Vercel:
 ```text
 api/index.py        Authenticated FastAPI streaming endpoint
 pages/index.tsx     Public landing page and sign-in flow
-pages/product.tsx   Subscription-gated idea generator
+pages/product.tsx   Subscription-gated consultation assistant
 pages/_app.tsx      Clerk provider and global application setup
 styles/globals.css  Global and Markdown styles
 week1/              Course notes and exercises
@@ -78,7 +80,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-The backend is implemented as a Python function in `api/index.py`, rather than a Next.js API route. The complete frontend-to-API flow is designed to run on Vercel, which detects both the Next.js application and the Python function.
+The backend is implemented as a Python function in `api/index.py`, rather than a Next.js API route. The frontend sends authenticated `POST /api` requests with the consultation payload and renders the streamed Markdown response. The complete frontend-to-API flow is designed to run on Vercel, which detects both the Next.js application and the Python function.
 
 Useful checks:
 
@@ -118,4 +120,4 @@ npx vercel --prod
 
 ## Disclaimer
 
-This repository is an educational exercise, not a production-ready commercial service. Pricing, subscription benefits, security controls, usage limits, and operational safeguards would need further work before a real launch.
+This repository is an educational exercise, not a production-ready healthcare product. It should not be used with real patient data. Privacy, compliance, medical review, security controls, usage limits, audit logging, data retention, pricing, and operational safeguards would need substantial work before any real launch.
