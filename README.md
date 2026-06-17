@@ -110,6 +110,11 @@ Deploy to production:
 npx vercel --prod
 ```
 
+An **AWS Lambda container deployment variant** exists on the `deploy/aws-lambda`
+branch. That branch adapts the app to run on AWS by exporting the Next.js
+frontend as static files, serving it from FastAPI, and packaging everything in a
+Docker image for Lambda.
+
 ## Learning Resources
 
 - [Course: AI Engineer Production Track](https://www.udemy.com/course/generative-and-agentic-ai-in-production/)
